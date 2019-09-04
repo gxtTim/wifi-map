@@ -63,7 +63,7 @@ public class PopWindow extends Activity{
             @Override
             public void onClick(View v) {
                 Intent returnIntent = new Intent();
-                returnIntent.putExtra("result","1"); //send value back to MapsActivity
+                returnIntent.putExtra("result","1"); // Send value back to MapsActivity
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             }
@@ -73,7 +73,7 @@ public class PopWindow extends Activity{
             @Override
             public void onClick(View v) {
                 Intent returnIntent = new Intent();
-                returnIntent.putExtra("result","2"); //send value back to MapsActivity
+                returnIntent.putExtra("result","2"); // Send value back to MapsActivity
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             }
@@ -83,7 +83,7 @@ public class PopWindow extends Activity{
             @Override
             public void onClick(View v) {
                 Intent returnIntent = new Intent();
-                returnIntent.putExtra("result","3"); //send value back to MapsActivity
+                returnIntent.putExtra("result","3"); // Send value back to MapsActivity
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             }
@@ -115,8 +115,7 @@ public class PopWindow extends Activity{
 
     }
 
-    /** Show WiFi strength
-     * **/
+    // Show WiFi strength
     private void setImage(ImageView v, int strength) {
         if (strength > 66) {
             v.setImageResource(R.drawable.ic_excellent);

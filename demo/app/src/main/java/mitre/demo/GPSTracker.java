@@ -30,9 +30,9 @@ public class GPSTracker extends Service implements LocationListener {
         this.context = context;
         getLocation();
     }
+
     private Location getLocation() {
-        // TODO Auto-generated method stub
-        try{
+        try {
             locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
 
             isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -73,11 +73,12 @@ public class GPSTracker extends Service implements LocationListener {
                     }
                 }
             }
-        }catch(Exception e){
+        } catch (Exception e){
             e.printStackTrace();
         }
         return location;
     }
+
     public void showSettingsAlert(){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(GPSTracker.this);
 
@@ -88,7 +89,7 @@ public class GPSTracker extends Service implements LocationListener {
         alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?");
 
         // Setting Icon to Dialog
-        //alertDialog.setIcon(R.drawable.delete);
+        // alertDialog.setIcon(R.drawable.delete);
 
         // On pressing Settings button
         alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
@@ -99,7 +100,7 @@ public class GPSTracker extends Service implements LocationListener {
             }
         });
 
-        // on pressing cancel button
+        // On pressing cancel button
         alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
@@ -129,6 +130,7 @@ public class GPSTracker extends Service implements LocationListener {
     public boolean canGetLocation(){
         return this.canGetLocation;
     }
+    
     @Override
     public void onLocationChanged(Location location) {
         // TODO Auto-generated method stub

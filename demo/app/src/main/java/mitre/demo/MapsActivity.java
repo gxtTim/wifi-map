@@ -89,7 +89,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Manifest.permission.ACCESS_COARSE_LOCATION
     };
 
-    //Widgets
+    // Widgets
     private EditText mSearchText;
     private ImageView mGps;
     private Spinner spinner;
@@ -114,7 +114,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        // get user's permission to get access to locations
+        // Get user's permission to get access to locations
         if(!hasPermissions(this, PERMISSIONS)){
             requestLocationPermission();
         } else {
@@ -141,7 +141,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Night Mode from 20 pm - 7 am
         if (Integer.parseInt(currentDateandTime) > 20 || Integer.parseInt(currentDateandTime) < 7) {
             try {
-                // Customize the styling of the base map using a JSON object defined in a raw resource file.
+                // Customize the styling of the base map using a JSON object defined in a raw resource file
                 boolean success = googleMap.setMapStyle(
                         MapStyleOptions.loadRawResourceStyle(
                                 this, R.raw.map_style));
@@ -171,7 +171,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    //Get return value from PopWindow Activity by Xintian
+    // Get return value from PopWindow Activity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1000) {
@@ -179,11 +179,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String result = data.getStringExtra("result");
                 if (result.equals("1")) {
                     if (mOverlay != null) mOverlay.remove();
-                    //draw a heatmap
+                
                     int[] colors = setColors(102, 225, 0, 255, 0, 0);
                     float[] startPoints = setStartPoints(0.2f, 1f);
                     Gradient gradient = setGradient(colors, startPoints);
                     drawHeatmap(getHeatmap(top5list.get(0)), gradient, 15, 0.7);
+                    
                     // Convert pq to JSON String
                     try {
                         String json = makeJSON(top5list.get(0));
@@ -194,11 +195,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
                 if (result.equals("2")) {
                     if (mOverlay != null) mOverlay.remove();
-                    //draw a heatmap
+
                     int[] colors = setColors(0, 0, 255, 255, 255, 0);
                     float[] startPoints = setStartPoints(0.2f, 1f);
                     Gradient gradient = setGradient(colors, startPoints);
                     drawHeatmap(getHeatmap(top5list.get(1)), gradient, 15, 0.7);
+                    
                     // Convert pq to JSON String
                     try {
                         String json = makeJSON(top5list.get(1));
@@ -209,11 +211,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
                 if (result.equals("3")) {
                     if (mOverlay != null) mOverlay.remove();
-                    //draw a heatmap
+
                     int[] colors = setColors(128, 128,128, 255, 0, 0);
                     float[] startPoints = setStartPoints(0.2f, 1f);
                     Gradient gradient = setGradient(colors, startPoints);
                     drawHeatmap(getHeatmap(top5list.get(2)), gradient, 15, 0.7);
+                    
                     // Convert pq to JSON String
                     try {
                         String json = makeJSON(top5list.get(2));
@@ -226,7 +229,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    //Initialize search bar by Xinyue
+    // Initialize search bar
     private void init() {
         mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -234,7 +237,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE ||
                         keyEvent.getAction() == KeyEvent.ACTION_DOWN || keyEvent.getAction() == KeyEvent.KEYCODE_ENTER)
                 {
-                    //execute our method for searching
+                    // Start searching
                     geoLocate();
                 }
                 return false;
@@ -263,7 +266,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
-    //Get searched location by Xinyue
+    // Get searched location
     private void geoLocate() {
         String searchString = mSearchText.getText().toString();
         Geocoder geocoder = new Geocoder(this);
@@ -277,20 +280,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         if(list.size() > 0) {
             Address address = list.get(0);
-
             Log.d(TAG,"geoLocate: found a location:" + address.toString());
-            //Toast.makeText(this, address.toString(), Toast.LENGTH_SHORT).show();
             moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM);
         } else {
             Log.d(TAG, "geoLocate: list size == 0");
         }
     }
 
-    //Enable start Button by Xinyue
+    // Enable the Start Button
     private void startBtn() {
         final Button mark = findViewById(R.id.startBtn);
         final ImageView save = findViewById(R.id.saveBtn);
-        // Create the gradient.
+
+        // Create the gradient
         final int[] colors = setColors(102, 255, 0, 255, 0, 0);
         final float[] startPoints = setStartPoints(0.2f, 1f);
         final Gradient gradient = setGradient(colors, startPoints);
@@ -313,16 +315,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             longitude = gps.getLongitude();
                             curPos = new LatLng(latitude, longitude);
                             Log.i("CurPos", curPos.toString());
-                            //getDeviceLocation();
                             wifiSignals = updateWifi();
                             getBestKLoc(wifiSignals);
                             getBestKWifi();
-                            //draw a heat map
+
                             if (!top5list.isEmpty()) {
                                 drawHeatmap(getHeatmap(top5list.get(0)), gradient, 15, 0.7);
                             }
 
-                            // delete heat map every 2 seconds
+                            // Delete heatmap every 2 seconds
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
@@ -344,7 +345,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         Log.i("makeJson", "Sorry failed to print.");
                     }
 
-                    //pop-window
+                    // Pop-window
                     for (int i = 0; i < top5list.size(); i++) {
                         Log.i("top_" + (i + 1) + ": ", top5list.get(i).toString());
                     }
@@ -366,11 +367,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
-    //Enable Save Button by Xintian
+    // Enable the Save Button
     private void saveBtn(String s) {
         final ImageView saveBtn = findViewById(R.id.saveBtn);
         final String data = s;
-        saveBtn.setVisibility(View.VISIBLE); //To set visible
+        saveBtn.setVisibility(View.VISIBLE);
         saveBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 new AlertDialog.Builder(MapsActivity.this)
@@ -393,7 +394,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
-    //Enable drop down list by Xintian
+    // Enable the Dropdown List
     private void spinner() {
         spinner = findViewById(R.id.spinner);
 
@@ -403,14 +404,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         types.add("Satellite");
         types.add("Terrain");
 
-        //Style and populate the spinner
+        // Style and populate the spinner
         ArrayAdapter<String> dataAdapter;
         dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
 
-        //Dropdown layout style
+        // Dropdown layout style
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        //Attaching data adapter to spinner
+        // Attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -424,10 +425,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 } else if (parent.getItemAtPosition(position).equals("Terrain")) {
                     mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
                 }
-                //on selecting a spinner item
+                // On selecting a spinner item
                 String item = parent.getItemAtPosition(position).toString();
 
-                //show selected spinner item
+                // Show selected spinner item
                 Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_SHORT).show();
             }
 
@@ -439,7 +440,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
-    //Get Current Location using Google Play Service by Xinyue
+    // Get Current Location using Google Play Service
     private void getDeviceLocation() {
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         try {
@@ -468,10 +469,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    //Move camera by Xinyue
+    // Move camera
     private void moveCamera(LatLng latLng, float zoom) {
         Log.d(TAG,"moveCamera: moving the camera to : lat:" + latLng.latitude + ", lng:"+latLng.longitude);
-        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(latLng)
                 .zoom(zoom)
@@ -479,14 +479,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
-    //Get heatmap data from db by Xintian
+    // Get heatmap data from db
     private void populateHeatmap() throws JSONException {
         Log.d("MyDB", "populateHeatmap: Displaying data in Heatmap.");
-        //get data from db
+        // Get data from db
         Cursor data = mHelper.getData();
         ArrayList<WeightedLatLng> list = new ArrayList<>();
         while (data.moveToNext()) {
-            //get Json String data
+            // Get Json String data
             Log.i("getData", data.getString(1));
 
             String json = data.getString(1);
@@ -501,14 +501,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
         if (list == null || list.isEmpty()) return;
-        //draw heatmap
+        
+        // Draw heatmap
         mProvider = new HeatmapTileProvider.Builder()
                 .weightedData(list)
                 .build();
         mOverlay = mMap.addTileOverlay(new TileOverlayOptions().tileProvider(mProvider));
     }
 
-    //Generate heatmap data from pq by Xintian
+    // Generate heatmap data from pq
     private List<WeightedLatLng> getHeatmap(PriorityQueue<SignalInfo> pq){
         List<WeightedLatLng> list = new ArrayList<>();
         for (SignalInfo info : pq){
@@ -517,14 +518,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             list.add(new WeightedLatLng(new LatLng(lat, lng), info.strength));
             Log.i("Location ", "( " + lat + " , " + lng + " )");
         }
-       // Log.i("Size: ", "" + pq.size());
         Log.i("size:","" + pq.size());
         return list;
     }
 
-    //Draw heatmap by Xintian
+    // Draw heatmap
     private void drawHeatmap(List<WeightedLatLng> data, Gradient gradient, int radius, double opacity) {
-        // Create the tile provider.
+        // Create the tile provider
         mProvider = new HeatmapTileProvider.Builder()
                 .weightedData(data)
                 .gradient(gradient)
@@ -532,11 +532,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .opacity(opacity)
                 .build();
 
-        // Add the tile overlay to the map.
+        // Add the tile overlay to the map
         mOverlay = mMap.addTileOverlay(new TileOverlayOptions().tileProvider(mProvider));
     }
 
-    //Set Heatmap Colors by Xintian
+    // Set Heatmap Colors
     private int[] setColors(int r1, int g1, int b1, int r2, int g2, int b2) {
         int[] colors = {
                 Color.rgb(r1, g1, b1), //Outer Color
@@ -545,19 +545,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return colors;
     }
 
-    //Set Heatmap StartPoints by Xintian
+    // Set Heatmap StartPoints
     private float[] setStartPoints(float a, float b){
         float[] startPoints = {a , b};
         return startPoints;
     }
 
-    //Set Heatmap Gradients by Xintian
+    // Set Heatmap Gradients
     private Gradient setGradient(int[] colors, float[] startPoints) {
         Gradient gradient = new Gradient(colors, startPoints);
         return gradient;
     }
 
-    // Reconstruction when refresh top 5 wifi pq && pq_now by Yingkai & Xinyue
+    // Reconstruction when refreshing the top 5 wifi pqs
     private void get5WifiPQ(){
         PriorityQueue<SignalInfo> top5Wifi=new PriorityQueue<>(new Comparator<SignalInfo>() {
             @Override
@@ -592,7 +592,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         initPQ(top5Wifi);
     }
 
-    // Initial at beginning by Yingkai & Xinyue
+    // Initialization pqs
     private void initPQ(PriorityQueue<SignalInfo> pqInfo){
         while(!pqInfo.isEmpty()){
             PriorityQueue<SignalInfo> pq = new PriorityQueue<>(new Comparator<SignalInfo>() {
@@ -606,7 +606,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    // Update top 5 wifi by Yingkai & Xinyue
+    // Update top 5 wifis
     private void getBestKWifi(){
         PriorityQueue<Signal> temp = new PriorityQueue<>(new Comparator<Signal>() {
             @Override
@@ -629,15 +629,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         top5list.sort(new PQComparator());
     }
 
-    // Comparator to sort List by Yingkai
+    // Comparator to the sorted list
     class PQComparator implements Comparator <PriorityQueue<SignalInfo>> {
-        // Overriding compare()method of Comparator
         public int compare(PriorityQueue<SignalInfo> p1, PriorityQueue<SignalInfo> p2) {
             return findMedian(p2) - findMedian(p1);
         }
     }
 
-    // Find median of pq by Yingkai
+    // Find median of pq
     private Integer findMedian(PriorityQueue<SignalInfo> pq){
         List<SignalInfo> temp = new ArrayList<>();
         int half = pq.size()/2;
@@ -656,7 +655,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return res;
     }
 
-    // Get strongest 100 signal strength sources by Yingkai & Xinyue
+    // Get the strongest 100 signal sources
     private void getBestKLoc(Map<String, Signal> map) {
         String wifiId;
         String wifiName;
@@ -691,7 +690,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    // Convert data to JSON by Yingkai
+    // Convert data to JSON
     private String makeJSON(PriorityQueue<SignalInfo> pq) throws JSONException {
         JSONArray array = new JSONArray();
         for (SignalInfo element : pq) {
@@ -707,7 +706,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     /*** PLEASE DO NOT ALTER THE FOLLOWINGS !!! ***/
 
-    /** Start: checks if permissions are granted by SP18 Team **/
+    /** Start: checks if permissions are granted **/
     public static boolean hasPermissions(Context context, String[] permissions) {
         if (Build.VERSION.SDK_INT < 23) {
             return true;
@@ -756,9 +755,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
     }
-    /** End: checks if permissions are granted by SP18 Team **/
+    /** End: checks if permissions are granted **/
 
-    /** Start: Initilize wifi search by SP18 Team **/
+    /** Start: Initilize wifi search **/
     private HashMap<String, Signal> updateWifi() {
         HashMap<String, Signal> updatedWifi = new HashMap<>();
         for (Signal signal : wifiSignals.values()) {
@@ -778,17 +777,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void wifiReceived() {
-        //Log.i(wifiTag, "\n ========wifi search complete========== \n");
-
         HashMap<String, Signal> tempWifiSignals = new HashMap<>();
         List<ScanResult> wifiScanResults = mainWifi.getScanResults();
         for (ScanResult wifi: wifiScanResults) {
             Signal wifiSignal = new Signal(wifi);
             tempWifiSignals.put(wifi.BSSID, wifiSignal);
-            //Log.i(wifiTag,wifi.SSID + " - " + wifi.BSSID + " - " + wifi.level);
         }
         newWifiSignals = tempWifiSignals;
-        //Log.i(wifiTag, "Starting another search again");
 
         mainWifi.startScan();
     }
@@ -803,17 +798,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    /* set up broadcast receiver to identify signals */
+    /* Set up broadcast receiver to identify signals */
     private void setSignalReceiver() {
         signalReceiver = new SignalReceiver();
         IntentFilter signalIntent = new IntentFilter();
         signalIntent.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
-//        signalIntent.addAction(BluetoothDevice.ACTION_FOUND);
-//        signalIntent.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
         registerReceiver(signalReceiver, signalIntent);
     }
 
-    /* start seaching for signals in area signals */
+    /* Start seaching for signals in area signals */
     private void startSignalSearch() {
         // for wifi
         mainWifi = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
@@ -821,5 +814,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mainWifi.startScan();
         }
     }
-    /** End: Initilize wifi search by SP18 Team **/
+    /** End: Initilize wifi search **/
 }

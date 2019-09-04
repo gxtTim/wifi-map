@@ -37,7 +37,7 @@ public class SQLitehelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    //Persistence Logic for Record Insertion into Database Table
+    // Persistence logic for record insertion into database table
     public boolean addData(String map) {
         try {
             String sql = "INSERT INTO " + TABLE_NAME +"(" + COL + ")" +

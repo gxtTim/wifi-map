@@ -6,13 +6,13 @@ import android.net.wifi.WifiManager;
 import java.util.ArrayList;
 
 public class Signal implements Comparable {
-    private String id; //mac address or BSSID
-    private Integer level; //RSSI. -70...-30
+    private String id; // Mac address or BSSID
+    private Integer level; // RSSI. -70...-30
     private Integer strength; // Calculated strength based on RSSI. 0..100
-    private Integer freq; //frequency (only wifi)
+    private Integer freq; // Frequency (only wifi)
     private String name; // SSID for wifi
-    private String venue; // registered venue of access point (only wifi)
-    private String type; //wifi
+    private String venue; // Registered venue of access point (only wifi)
+    private String type; // Wifi
     private ArrayList<Integer> history;
 
     Signal(ScanResult wifi) {
