@@ -1,4 +1,4 @@
-# Wi-Fi Map 
+# Wi-Fi Map 谭英恺
 
 <p align="center">
   <img src="/resource/image/ic_logo.png">
