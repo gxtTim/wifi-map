@@ -7,7 +7,7 @@
 
 # Contributors
 
-Xintian Gu, Yingkai Tan, Xinyue Wang, Yuanyuan Zhao from Cornell University, collaborating with Matthew Kuzdeba and Scott Zhao from the MITRE Corporation.
+Xintian Gu ([gxtTim](https://github.com/gxtTim)), Yingkai Tan ([yt549](https://github.com/yt549)), Xinyue Wang ([serenawangCU](https://github.com/serenawangCU)), Yuanyuan Zhao ([zhaoyuanyuan2011](https://github.com/zhaoyuanyuan2011)) from Cornell University, collaborating with Matthew Kuzdeba and Scott Zhao from the MITRE Corporation.
 
 # Introduction
 
