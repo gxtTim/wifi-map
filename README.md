@@ -41,7 +41,7 @@ The following tests was runned around Cornell University.
 
 <p align="center">
   <img src="/resource/gif/search_bar.gif">
-</p>
+</p> 
 
 ## Main Campus Wi-Fi Map
 <p align="center">
